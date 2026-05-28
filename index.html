@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MobileHack Lab | InfoEnc</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app">
+
+    <!-- Top Navigation Bar -->
+    <nav id="navbar">
+      <div class="nav-left">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle sidebar">
+          <i class="fas fa-bars"></i>
+        </button>
+        <a href="#" class="nav-brand" data-page="dashboard">
+          <span class="brand-icon"><i class="fas fa-mobile-screen-button"></i></span>
+          <span class="brand-text">Mobile<span class="brand-accent">Hack</span>Lab</span>
+        </a>
+      </div>
+      <div class="nav-center" id="breadcrumb"></div>
+      <div class="nav-right">
+        <div class="xp-pill" id="nav-xp-pill">
+          <i class="fas fa-bolt"></i>
+          <span id="nav-xp">0</span> XP
+        </div>
+        <div class="rank-badge" id="nav-rank">NOVICE</div>
+        <button class="avatar-btn" data-page="profile" id="nav-avatar-btn">
+          <i class="fas fa-circle-user"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Left Sidebar -->
+    <aside id="sidebar" class="sidebar">
+      <nav class="sidebar-nav">
+        <a href="#" class="sidebar-item active" data-page="dashboard">
+          <span class="si-icon"><i class="fas fa-gauge-high"></i></span>
+          <span class="si-label">Dashboard</span>
+        </a>
+        <a href="#" class="sidebar-item" data-page="paths">
+          <span class="si-icon"><i class="fas fa-route"></i></span>
+          <span class="si-label">Learning Paths</span>
+        </a>
+        <div class="sidebar-divider"></div>
+        <span class="sidebar-section-label">PATHS</span>
+        <a href="#" class="sidebar-item sidebar-sub" data-page="path" data-path="android">
+          <span class="si-icon"><i class="fab fa-android"></i></span>
+          <span class="si-label">Android Hacking</span>
+          <span class="si-badge si-badge--green">7</span>
+        </a>
+        <a href="#" class="sidebar-item sidebar-sub" data-page="path" data-path="ios">
+          <span class="si-icon"><i class="fab fa-apple"></i></span>
+          <span class="si-label">iOS Hacking</span>
+          <span class="si-badge si-badge--blue">5</span>
+        </a>
+        <a href="#" class="sidebar-item sidebar-sub" data-page="path" data-path="network">
+          <span class="si-icon"><i class="fas fa-network-wired"></i></span>
+          <span class="si-label">Network Analysis</span>
+          <span class="si-badge si-badge--purple">3</span>
+        </a>
+        <div class="sidebar-divider"></div>
+        <a href="#" class="sidebar-item" data-page="ctf">
+          <span class="si-icon"><i class="fas fa-flag"></i></span>
+          <span class="si-label">CTF Challenges</span>
+          <span class="si-badge si-badge--red">10</span>
+        </a>
+        <a href="#" class="sidebar-item" data-page="tools">
+          <span class="si-icon"><i class="fas fa-screwdriver-wrench"></i></span>
+          <span class="si-label">Tools Reference</span>
+        </a>
+        <div class="sidebar-divider"></div>
+        <a href="#" class="sidebar-item" data-page="profile">
+          <span class="si-icon"><i class="fas fa-user-shield"></i></span>
+          <span class="si-label">My Profile</span>
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="infoenc-brand">
+          <i class="fas fa-shield-halved"></i> InfoEnc Security
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main-content">
+      <!-- Rendered dynamically by app.js -->
+    </main>
+
+  </div>
+
+  <!-- Lab Modal / Full-screen Lab View -->
+  <div id="lab-overlay" class="lab-overlay hidden">
+    <div class="lab-topbar">
+      <div class="lab-topbar-left">
+        <button class="lab-exit-btn" id="lab-exit-btn">
+          <i class="fas fa-arrow-left"></i> Exit Lab
+        </button>
+        <div class="lab-title-area">
+          <span id="lab-room-name"></span>
+          <i class="fas fa-chevron-right"></i>
+          <span id="lab-task-name"></span>
+        </div>
+      </div>
+      <div class="lab-topbar-center">
+        <div class="task-progress-bar">
+          <div id="lab-task-progress" class="task-progress-fill"></div>
+        </div>
+        <span id="lab-task-counter" class="task-counter-text"></span>
+      </div>
+      <div class="lab-topbar-right">
+        <button class="btn btn--ghost btn--sm" id="lab-prev-btn"><i class="fas fa-chevron-left"></i> Prev</button>
+        <button class="btn btn--accent btn--sm" id="lab-next-btn">Next <i class="fas fa-chevron-right"></i></button>
+      </div>
+    </div>
+    <div class="lab-body">
+      <!-- Left: Theory -->
+      <div class="lab-panel lab-theory-panel" id="lab-theory-panel">
+        <div class="lab-panel-header">
+          <i class="fas fa-book-open"></i> Theory
+        </div>
+        <div class="lab-theory-content" id="lab-theory-content"></div>
+        <div class="lab-questions" id="lab-questions"></div>
+      </div>
+      <!-- Right: Terminal -->
+      <div class="lab-panel lab-terminal-panel" id="lab-terminal-panel">
+        <div class="lab-panel-header">
+          <i class="fas fa-terminal"></i> Terminal
+          <button class="terminal-clear-btn" id="terminal-clear-btn"><i class="fas fa-trash-can"></i> Clear</button>
+        </div>
+        <div class="terminal-container" id="terminal-container">
+          <div class="terminal-output" id="terminal-output"></div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt" id="terminal-prompt">attacker@mobilehack:~$</span>
+            <input type="text" class="terminal-input" id="terminal-input" autocomplete="off" autocorrect="off" spellcheck="false" placeholder="Type a command...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/terminal.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
