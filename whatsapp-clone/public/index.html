@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WhatsApp</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>" />
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- Login Screen -->
+<div id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.41A9.954 9.954 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z" fill="#00a884"/>
+        <path d="M8.5 9.5c0-.276.224-.5.5-.5h6a.5.5 0 010 1H9a.5.5 0 01-.5-.5zm0 2.5c0-.276.224-.5.5-.5h6a.5.5 0 010 1H9a.5.5 0 01-.5-.5zm0 2.5c0-.276.224-.5.5-.5h4a.5.5 0 010 1H9a.5.5 0 01-.5-.5z" fill="white"/>
+      </svg>
+    </div>
+    <h1>WhatsApp</h1>
+    <p>Enter your name to start chatting</p>
+    <form id="login-form">
+      <input
+        id="login-username"
+        type="text"
+        placeholder="Your name"
+        maxlength="30"
+        autocomplete="off"
+        required
+      />
+      <button type="submit">Continue</button>
+    </form>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app" style="display:none">
+
+  <!-- Sidebar -->
+  <aside id="sidebar">
+    <header class="sidebar-header">
+      <div class="sidebar-avatar" id="my-avatar"></div>
+      <div class="sidebar-title">WhatsApp</div>
+      <div class="sidebar-actions">
+        <button class="icon-btn" id="status-compose-btn" title="New status">
+          <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 8v8M8 12h8"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="search-bar">
+      <div class="search-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </div>
+      <input id="search-input" type="text" placeholder="Search or start new chat" />
+    </div>
+
+    <div class="tab-switcher">
+      <button class="tab-btn active" data-tab="chats">Chats</button>
+      <button class="tab-btn" data-tab="status">Status</button>
+    </div>
+
+    <!-- Chats tab -->
+    <div id="chats-tab" class="tab-content active">
+      <div id="contact-list"></div>
+    </div>
+
+    <!-- Status tab -->
+    <div id="status-tab" class="tab-content">
+      <div class="status-my-section">
+        <div class="status-my-row" id="my-status-row">
+          <div class="status-add-avatar" id="my-status-avatar"></div>
+          <div class="status-my-info">
+            <div class="status-my-name">My Status</div>
+            <div class="status-my-hint">Tap to add status update</div>
+          </div>
+        </div>
+      </div>
+      <div class="status-recent-label">Recent updates</div>
+      <div id="status-list"></div>
+    </div>
+  </aside>
+
+  <!-- Chat Panel -->
+  <main id="chat-panel">
+    <!-- Empty state -->
+    <div id="chat-empty-state">
+      <div class="empty-icon">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="100" cy="100" r="80" fill="#202c33"/>
+          <path d="M100 40C66.863 40 40 66.863 40 100c0 12.6 3.7 24.36 10.09 34.21L40 160l26.4-9.56A59.74 59.74 0 00100 160c33.137 0 60-26.863 60-60S133.137 40 100 40z" fill="#2a3942"/>
+          <path d="M80 93a4 4 0 100 8 4 4 0 000-8zm20 0a4 4 0 100 8 4 4 0 000-8zm20 0a4 4 0 100 8 4 4 0 000-8z" fill="#8696a0"/>
+        </svg>
+      </div>
+      <h2>WhatsApp Web</h2>
+      <p>Send and receive messages with friends and family</p>
+    </div>
+
+    <!-- Active conversation -->
+    <div id="chat-conversation" style="display:none">
+      <header class="chat-header">
+        <button class="back-btn icon-btn" id="back-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5m0 0l7 7m-7-7l7-7"/></svg>
+        </button>
+        <div class="chat-header-avatar" id="chat-header-avatar"></div>
+        <div class="chat-header-info">
+          <div class="chat-header-name" id="chat-header-name"></div>
+          <div class="chat-header-status" id="chat-header-status"></div>
+        </div>
+      </header>
+
+      <div id="message-list"></div>
+
+      <div id="typing-indicator" class="typing-indicator" style="display:none">
+        <div class="typing-bubble">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+
+      <div class="input-bar">
+        <button class="icon-btn attach-btn" id="attach-btn" title="Attach file">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+        </button>
+        <input id="message-input" type="text" placeholder="Type a message" autocomplete="off" />
+        <button class="send-btn" id="send-btn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+        <input type="file" id="file-input" style="display:none" accept="*/*" />
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Media Preview Modal -->
+<div id="media-modal" class="modal" style="display:none">
+  <div class="modal-overlay" id="media-modal-overlay"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>Send Media</span>
+      <button class="icon-btn" id="media-modal-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="media-preview-area"></div>
+    <div class="modal-footer">
+      <input id="media-caption" type="text" placeholder="Add a caption..." />
+      <button class="send-btn" id="media-send-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Status Viewer Modal -->
+<div id="status-viewer-modal" class="modal" style="display:none">
+  <div class="modal-overlay" id="status-viewer-overlay"></div>
+  <div class="status-viewer">
+    <div class="status-viewer-header">
+      <div class="status-viewer-avatar" id="sv-avatar"></div>
+      <div class="status-viewer-info">
+        <div id="sv-author"></div>
+        <div id="sv-time" class="text-muted"></div>
+      </div>
+      <button class="icon-btn" id="sv-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="status-progress-bar"><div id="sv-progress"></div></div>
+    <div class="status-viewer-body" id="sv-body"></div>
+    <div class="status-viewer-nav">
+      <div class="sv-nav-left" id="sv-nav-left"></div>
+      <div class="sv-nav-right" id="sv-nav-right"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Status Composer Modal -->
+<div id="status-composer-modal" class="modal" style="display:none">
+  <div class="modal-overlay" id="status-composer-overlay"></div>
+  <div class="modal-box">
+    <div class="modal-header">
+      <span>New Status</span>
+      <button class="icon-btn" id="status-composer-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <textarea id="status-text-input" placeholder="What's on your mind?" rows="4" maxlength="700"></textarea>
+      <div class="status-image-row">
+        <button class="outline-btn" id="status-image-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          Add Image
+        </button>
+        <span id="status-image-name" class="text-muted"></span>
+        <input type="file" id="status-image-input" style="display:none" accept="image/*" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="outline-btn" id="status-composer-cancel">Cancel</button>
+      <button class="primary-btn" id="status-composer-post">Post</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast Container -->
+<div id="toast-container"></div>
+
+<script src="/js/socket.js"></script>
+<script src="/js/ui.js"></script>
+<script src="/js/media.js"></script>
+<script src="/js/status.js"></script>
+<script src="/js/chat.js"></script>
+</body>
+</html>
