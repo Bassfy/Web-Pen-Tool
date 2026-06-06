@@ -255,6 +255,7 @@ img { max-width: 100%; display: block; }
 .si-badge--blue   { background: rgba(74,158,255,.15); color: var(--accent-blue); }
 .si-badge--purple { background: rgba(168,85,247,.15); color: var(--accent-purple); }
 .si-badge--red    { background: rgba(244,63,94,.15);  color: var(--accent-red); }
+.si-badge--yellow { background: rgba(251,191,36,.15); color: var(--accent-yellow); }
 
 .sidebar-divider { height: 1px; background: var(--border); margin: 8px 8px; }
 .sidebar-section-label {
@@ -460,6 +461,7 @@ img { max-width: 100%; display: block; }
 .path-card--android { --card-accent: #3ddc84; }
 .path-card--ios     { --card-accent: #a0c4ff; }
 .path-card--network { --card-accent: #a855f7; }
+.path-card--crypto  { --card-accent: #f59e0b; }
 
 .path-card-icon {
   width: 50px; height: 50px;
@@ -471,6 +473,7 @@ img { max-width: 100%; display: block; }
 .path-card--android .path-card-icon { background: rgba(61,220,132,.12); color: #3ddc84; }
 .path-card--ios     .path-card-icon { background: rgba(160,196,255,.12); color: #a0c4ff; }
 .path-card--network .path-card-icon { background: rgba(168,85,247,.12);  color: var(--accent-purple); }
+.path-card--crypto  .path-card-icon { background: rgba(245,158,11,.12);  color: var(--accent-yellow); }
 
 .path-card-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
 .path-card-desc  { font-size: 0.78rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 14px; }
