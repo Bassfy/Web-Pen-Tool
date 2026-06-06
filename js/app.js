@@ -124,6 +124,21 @@ function checkAchievements() {
   tryUnlock('ctf_1',        state.ctfSolved.size >= 1);
   tryUnlock('ctf_5',        state.ctfSolved.size >= 5);
   tryUnlock('completionist', roomsDone >= 5);
+  // Crypto path achievements
+  tryUnlock('crypto_init',  Object.keys(state.progress).some(k => k.startsWith('crypto')));
+  const cryptoClassical = ROOMS['crypto-classical'];
+  tryUnlock('cipher_break', cryptoClassical && cryptoClassical.tasks &&
+    getRoomProgress('crypto-classical').completedTasks.length === cryptoClassical.tasks.length);
+  const cryptoHashing = ROOMS['crypto-hashing'];
+  tryUnlock('hash_hunter',  cryptoHashing && cryptoHashing.tasks &&
+    getRoomProgress('crypto-hashing').completedTasks.length === cryptoHashing.tasks.length);
+  const cryptoExam = ROOMS['crypto-final-exam'];
+  tryUnlock('crypto_grad',  cryptoExam && cryptoExam.tasks &&
+    getRoomProgress('crypto-final-exam').completedTasks.length === cryptoExam.tasks.length);
+  const cryptoRooms = ['crypto-intro','crypto-classical','crypto-symmetric','crypto-asymmetric','crypto-hashing','crypto-pki-tls','crypto-attacks','crypto-final-exam'];
+  tryUnlock('crypto_elite', cryptoRooms.every(id => {
+    const r = ROOMS[id]; return r && r.tasks && getRoomProgress(id).completedTasks.length === r.tasks.length;
+  }));
 }
 
 function updateNavXP() {
@@ -230,7 +245,7 @@ function renderDashboard(el) {
       </div>
       <div class="stat-card">
         <div class="stat-icon stat-icon--purple"><i class="fas fa-flag"></i></div>
-        <div><div class="stat-value">${state.ctfSolved.size}/10</div><div class="stat-label">CTF Flags Captured</div></div>
+        <div><div class="stat-value">${state.ctfSolved.size}/${CTF_CHALLENGES.length}</div><div class="stat-label">CTF Flags Captured</div></div>
       </div>
       <div class="stat-card">
         <div class="stat-icon stat-icon--yellow"><i class="fas fa-bolt"></i></div>
@@ -274,10 +289,10 @@ function renderDashboard(el) {
         <div class="section-title" style="margin-bottom:16px"><i class="fas fa-flag"></i> CTF Progress</div>
         <div style="margin-bottom:12px">
           <div style="display:flex;justify-content:space-between;font-size:.78rem;color:var(--text-muted);margin-bottom:6px">
-            <span>${state.ctfSolved.size} / 10 Solved</span>
-            <span>${Math.round(state.ctfSolved.size*100/10)}%</span>
+            <span>${state.ctfSolved.size} / ${CTF_CHALLENGES.length} Solved</span>
+            <span>${Math.round(state.ctfSolved.size*100/CTF_CHALLENGES.length)}%</span>
           </div>
-          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${Math.round(state.ctfSolved.size*100/10)}%;background:var(--accent-red)"></div></div>
+          <div class="progress-bar-wrap"><div class="progress-bar-fill" style="width:${Math.round(state.ctfSolved.size*100/CTF_CHALLENGES.length)}%;background:var(--accent-red)"></div></div>
         </div>
         <button class="btn btn--outline btn--sm" data-page="ctf"><i class="fas fa-flag"></i> Go to CTF Challenges</button>
       </div>
@@ -682,7 +697,7 @@ function renderCTF(el) {
   <div class="fade-in">
     <div class="section-header">
       <h1 class="section-title" style="font-size:1.3rem"><i class="fas fa-flag"></i> CTF Challenges</h1>
-      <span style="font-size:.8rem;color:var(--text-muted)">${state.ctfSolved.size}/10 Solved</span>
+      <span style="font-size:.8rem;color:var(--text-muted)">${state.ctfSolved.size}/${CTF_CHALLENGES.length} Solved</span>
     </div>
     <div style="margin-bottom:20px">
       <div class="progress-bar-wrap" style="height:8px">
